@@ -15,6 +15,12 @@ def plot_squares(csv_path, miles):
     # Load csv
     df = pd.read_csv(csv_path)
 
+    # Create new columns for df
+    corner_columns = ['Top Left X', 'Top Left Y', 'Top Right X', 'Top Right Y', 
+                      'Bottom Left X', 'Bottom Left Y', 'Bottom Right X',
+                      'Bottom Right Y']
+    df[corner_columns] = pd.DataFrame([[0] * len(corner_columns)], index=df.index)
+
     # iter through rows
     for index, row in df.iterrows():
         coords = (row['LAT'], row['LONG'])
@@ -22,10 +28,15 @@ def plot_squares(csv_path, miles):
         top_left, top_right, bottom_left, bottom_right = square
 
         # Add to separate column on df:
-        df.at[index, 'Top Left'] = top_left
-        df.at[index, 'Top Right'] = top_right
-        df.at[index, 'Bottom Left'] = bottom_left
-        df.at[index, 'Bottom Right'] = bottom_right
+        df.at[index, 'Top Left X'] = top_left.split(", ")[0]
+        df.at[index, 'Top Left Y'] = top_left.split(", ")[1]
+        df.at[index, 'Top Right X'] = top_right.split(", ")[0]
+        df.at[index, 'Top Right Y'] = top_right.split(", ")[1]
+        df.at[index, 'Bottom Left X'] = bottom_left.split(", ")[0]
+        df.at[index, 'Bottom Left Y'] = bottom_left.split(", ")[1]
+        df.at[index, 'Bottom Right X'] = bottom_right.split(", ")[0]
+        df.at[index, 'Bottom Right Y'] = bottom_right.split(", ")[1]
+        # Uncomment to only process the first ten records.
         if index > 10:
             break
     return df
@@ -36,5 +47,5 @@ miles = 10
 
 output = plot_squares(csv_path, miles)
 
-output.to_csv('~/Templates/__Misc__/output.csv', index=False)
+output.head().to_csv('~/Templates/__Misc__/output-head.csv', index=False)
 print(output.head())
