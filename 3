@@ -3,8 +3,8 @@ import math
 import pandas as pd
 from geopy.distance import geodesic
 
-def calculate_diagonal(length_of_side):
-    return math.sqrt(length_of_side ** 2 + length_of_side ** 2)
+def calculate_hypothenuse(edge_miles):
+    return math.sqrt(edge_miles ** 2 + edge_miles ** 2)
 
 def calculate_square(coordinates,miles):
     
@@ -55,16 +55,17 @@ def init():
     print()
     valid_csv = False
     while not valid_csv:
-        csv_path = input('Please enter the path of the input CSV file: ')
+        csv_path = input('Enter the path of the input CSV file: ')
         if os.path.isfile(csv_path):
             valid_csv = True
         print('This file does not exist...')
 
     output_path = os.path.join(os.path.dirname(csv_path), "output.csv")
 
-    miles = float(input('Please enter the number of miles for each side of the square: '))
+    miles = float(input('Enter the number of miles for the square: '))
     
-    miles = calculate_diagonal(miles)
+    miles = calculate_hypothenuse(miles)
+    print(miles)
 
     print('Plotting the squares.....')
     
