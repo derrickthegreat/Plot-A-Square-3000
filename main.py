@@ -42,7 +42,7 @@ def plot_squares(csv_path, miles):
         # Progress Update
         progress = (index + 1) / df_length * 100
         print(f"Processing: {progress:.2f}% complete", end="\r")
-        # Uncomment to only process the first ten records.
+        # Uncomment to only process the first X records.
         #if index > 50:
         #    break
     return df
